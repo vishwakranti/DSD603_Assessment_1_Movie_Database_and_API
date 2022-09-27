@@ -17,7 +17,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Movie.ToListAsync());
+              return View(await _context.Movie.Include(x => x.Casts).ToListAsync());
         }
 
         // GET: Movies/Details/5
