@@ -91,6 +91,18 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
             {
                 return NotFound();
             }
+            var moviesSelectList = new SelectList(items: _context.Movie, dataValueField: "Id",                                          dataTextField: "Title");
+
+            foreach (var item in moviesSelectList)
+            {
+                if(item.Value == id.ToString())
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+
+            ViewData[index: "Movies"] = moviesSelectList;
             return View(cast);
         }
 
