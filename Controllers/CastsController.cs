@@ -33,7 +33,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
                 return NotFound();
             }
 
-            var cast = await _context.Cast
+            var cast = await _context.Cast.Include(x => x.Movie)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cast == null)
             {
