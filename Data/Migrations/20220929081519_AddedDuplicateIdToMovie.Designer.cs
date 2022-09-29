@@ -4,6 +4,7 @@ using DSD603_Asseessment_1_Movie_Database_and_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220929081519_AddedDuplicateIdToMovie")]
+    partial class AddedDuplicateIdToMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +38,8 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ScreenName")
                         .IsRequired()
@@ -52,8 +54,13 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
 
             modelBuilder.Entity("DSD603_Asseessment_1_Movie_Database_and_API.Models.Movie", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid>("DuplicateId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Genre")

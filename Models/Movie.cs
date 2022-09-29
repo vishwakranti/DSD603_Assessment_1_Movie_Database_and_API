@@ -5,7 +5,8 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Models
     public class Movie
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
         [Display(Name = "Movie Title")]
         public string? Title { get; set; }
         [Display(Name = "Release Date")]

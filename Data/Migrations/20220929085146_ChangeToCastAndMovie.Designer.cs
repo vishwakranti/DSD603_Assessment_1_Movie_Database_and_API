@@ -4,6 +4,7 @@ using DSD603_Asseessment_1_Movie_Database_and_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220929085146_ChangeToCastAndMovie")]
+    partial class ChangeToCastAndMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +38,11 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("MovieId")
+                    b.Property<Guid>("MovieDuplicateId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ScreenName")
                         .IsRequired()
@@ -45,14 +50,14 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieDuplicateId");
 
                     b.ToTable("Cast");
                 });
 
             modelBuilder.Entity("DSD603_Asseessment_1_Movie_Database_and_API.Models.Movie", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("DuplicateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -71,7 +76,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("DuplicateId");
 
                     b.ToTable("Movie");
                 });
@@ -282,7 +287,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
                 {
                     b.HasOne("DSD603_Asseessment_1_Movie_Database_and_API.Models.Movie", "Movie")
                         .WithMany("Casts")
-                        .HasForeignKey("MovieId")
+                        .HasForeignKey("MovieDuplicateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
