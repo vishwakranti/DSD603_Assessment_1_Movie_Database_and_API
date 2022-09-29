@@ -20,7 +20,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Models
         [Display(Name = "Screen Name")]
         public string ScreenName { get; set; }
 
-        public Guid MovieId { get; set; }
+        public Guid? MovieId { get; set; }
 
         public Movie Movie { get; set; }
 
