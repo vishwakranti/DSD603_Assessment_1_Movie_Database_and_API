@@ -53,10 +53,23 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @foreach (var cast in item.Casts)
-                    {
-                        @Html.DisplayFor(modelItem => cast.FirstName)
+                    @{
+                        if (item.Casts.Count > 0)
+                        {
+                            var CastNames = new List<string>();
+                            foreach (var cast in item.Casts)
+                            {
+                               CastNames.Add(string.Concat(cast.FirstName + " " + cast.LastName));
+
+                            }
+                            var names = string.Join(", ", CastNames);
+                            @names
+                        }
+
+
+
                     }
+
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

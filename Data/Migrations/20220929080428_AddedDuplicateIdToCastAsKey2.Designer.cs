@@ -4,6 +4,7 @@ using DSD603_Asseessment_1_Movie_Database_and_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220929080428_AddedDuplicateIdToCastAsKey2")]
+    partial class AddedDuplicateIdToCastAsKey2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +26,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
 
             modelBuilder.Entity("DSD603_Asseessment_1_Movie_Database_and_API.Models.Cast", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("DuplicateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -43,7 +45,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("DuplicateId");
 
                     b.HasIndex("MovieId");
 

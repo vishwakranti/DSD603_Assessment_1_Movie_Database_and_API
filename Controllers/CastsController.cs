@@ -26,7 +26,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
         }
 
         // GET: Casts/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Cast == null)
             {
@@ -111,7 +111,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,ScreenName")] Cast cast)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,FirstName,LastName,ScreenName")] Cast cast)
         {
             if (id != cast.Id)
             {
@@ -142,7 +142,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
         }
 
         // GET: Casts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Cast == null)
             {
@@ -178,7 +178,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CastExists(int id)
+        private bool CastExists(Guid id)
         {
           return _context.Cast.Any(e => e.Id == id);
         }

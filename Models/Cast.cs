@@ -6,8 +6,10 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Models
 {
     public class Cast
     {
+        //[Key]
+        //public int Id { get; set; }
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -20,8 +22,6 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Models
 
         public int MovieId { get; set; }
 
-        //[ForeignKey("MovieId")]
-        //[BindNever]
         public Movie Movie { get; set; }
 
 
