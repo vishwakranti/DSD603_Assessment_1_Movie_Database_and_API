@@ -6,8 +6,6 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Models
 {
     public class Cast
     {
-        //[Key]
-        //public int Id { get; set; }
         [Key]
         public Guid Id { get; set; }
 
@@ -22,6 +20,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Models
 
         public Guid? MovieId { get; set; }
 
+        //[BindNever]
         public Movie Movie { get; set; }
 
 

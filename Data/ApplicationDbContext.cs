@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using DSD603_Asseessment_1_Movie_Database_and_API.Models;
+using System.Configuration;
 
 namespace DSD603_Asseessment_1_Movie_Database_and_API.Data
 {
