@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using DSD603_Asseessment_1_Movie_Database_and_API.Data;
 using DSD603_Asseessment_1_Movie_Database_and_API.Models;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
 {
@@ -17,7 +19,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Movie.Include(x => x.Casts).ToListAsync());
+            return View(await _context.Movie.Include(x => x.Casts).ToListAsync());
         }
 
         // GET: Movies/Details/5
@@ -27,15 +29,37 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
             {
                 return NotFound();
             }
-
-            var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            var baseUrl = "https://localhost:7050/";
+            using (var client = new HttpClient())
             {
-                return NotFound();
+                //Passing service base url
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage responseMessage = await client.GetAsync("api/movies1/GetMovie/" + id);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api
+                    var movieResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                   
+                    //Deserialize the movieResponse
+                    var movie = JsonConvert.DeserializeObject<Movie>(movieResponse);
+
+                    if (movie == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return View(movie);
+                }
             }
 
-            return View(movie);
+            //var movie = await _context.Movie.Include(x => x.Casts)
+            //.FirstOrDefaultAsync(m => m.Id == id);
+
+            return NotFound();
+
         }
 
         // GET: Movies/Create
@@ -61,7 +85,7 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
         }
 
         // GET: Movies/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Movie == null)
             {
@@ -88,27 +112,25 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(movie);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MovieExists(movie.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(movie);
+                await _context.SaveChangesAsync();
             }
-            return View(movie);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovieExists(movie.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+
+            //return View(movie);
         }
 
         // GET: Movies/Delete/5
@@ -143,14 +165,14 @@ namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
             {
                 _context.Movie.Remove(movie);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MovieExists(Guid id)
         {
-          return _context.Movie.Any(e => e.Id == id);
+            return _context.Movie.Any(e => e.Id == id);
         }
     }
 }
