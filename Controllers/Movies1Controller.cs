@@ -5,9 +5,9 @@ using DSD603_Asseessment_1_Movie_Database_and_API.Models;
 
 namespace DSD603_Asseessment_1_Movie_Database_and_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller] / [action]")]
     [ApiController]
-    public class Movies1Controller : ControllerBase
+    public class Movies1Controller : ControllerBase, IMovies1Controller
     {
         private readonly ApplicationDbContext _context;
 
